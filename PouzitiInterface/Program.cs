@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PouzitiInterface
 {
@@ -15,11 +16,6 @@ namespace PouzitiInterface
                 return 0;
 
             return (Volume > c.Volume ? 1 : -1);
-        }
-
-        public int CompareByName(Car c)
-        {
-            return string.Compare(Name, c.Name);
         }
 
         public override string ToString()
@@ -47,17 +43,24 @@ namespace PouzitiInterface
                 new Car { Brand = "Honda", Name = "Civic", Volume = 1.6 },
             };
 
-           
-
+            // podle CompareTo
             cars.Sort();
             foreach (var c in cars)
                 Console.WriteLine(c);
 
             Console.WriteLine();
+            // podle Name
             IComparer<Car> icc = new CompareByName();
             cars.Sort(icc);
             foreach (var c in cars)
                 Console.WriteLine(c);
+
+            // podle Brand s Linq
+            Console.WriteLine();
+            var podleBrand = from car in cars orderby car.Brand select car;
+
+            foreach (var v in podleBrand)
+                Console.WriteLine(v);
         }
     }
 }
